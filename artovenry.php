@@ -3,7 +3,6 @@ if(!defined("ART_APP_PATH"))die;
 
 class Artovenry{
   static function boot(){
-    require "vendor/autoload.php";
     require "lib/active_support.php";
     require "lib/configuration.php";
     require "lib/active_model.php";
