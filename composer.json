@@ -1,0 +1,18 @@
+{
+    "name": "artovenry/artovenry",
+    "description": "mini-framework for me",
+    "require": {
+        "j4mie/idiorm": "~1.5",
+        "symfony/yaml": "~2.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "showtarow",
+            "email": "showtarow@gmail.com"
+        }
+    ],
+    "config":{
+        "bin-dir": "bin"
+    }
+}
