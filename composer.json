@@ -1,5 +1,5 @@
 {
-    "name": "artovenry/artovenry",
+    "name": "showtarow/artovenry",
     "description": "mini-framework for me",
     "require": {
         "j4mie/idiorm": "~1.5",
@@ -12,7 +12,7 @@
             "email": "showtarow@gmail.com"
         }
     ],
-    "config":{
-        "bin-dir": "bin"
+    "autoload":{
+        "classmap":["artovenry.php", "lib/"]
     }
 }
