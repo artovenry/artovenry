@@ -14,12 +14,14 @@ class Collection extends \ArrayObject{
       }
       $rs[]= $_record;
     }
-    return json_encode($rs);
+    return json_encode($rs, SCRIPT_DEBUG? JSON_PRETTY_PRINT: null);
   }
 }
 
 
 trait Finder{
+  protected $_prop_reset = [];
+
   function take($limit=0){
     if(!$limit)return  $this->find_one();
     return $this->limit($limit)->find_many();
@@ -28,11 +30,38 @@ trait Finder{
     return $this->find_many();
   }
 
+  protected function props(){
+    $props= [
+      "_result_columns", 
+      "_join_sources", 
+      "_distinct", 
+      "_raw_query", 
+      "_raw_parameters", 
+      "_where_conditions", 
+      "_limit", 
+      "_offset", 
+      "_order_by", 
+      "_group_by",
+      "_having_conditions",
+    ];
+    return $props;
+  }
+
+  function reset($prop){
+    foreach($this->props() as $p){
+      if($p !== "_{$prop}")continue;
+      $_p= "_{$prop}";
+      $this->_prop_reset[]= $_p;
+    }
+    return $this;
+  }
 
   function find($id){
     if(method_exists($class_name, "_default_scope")){
       $instance= $this->_create_model_instance(
-        $class_name::filter("_default_scope")->merge($this)->__find_one($id)
+        $class_name::filter("_default_scope")
+        ->merge($this)
+        ->__find_one($id)
       );
     }else{
       $instance= $this->_create_model_instance($this->__find_one($id));
@@ -46,7 +75,9 @@ trait Finder{
     if(method_exists($class_name, "_default_scope")){
       $instance= $this->_create_model_instance(
         //$this->filter("_default_scope")->__find_one($id)
-        $class_name::filter("_default_scope")->merge($this)->__find_one($id)
+        $class_name::filter("_default_scope")
+        ->merge($this)
+        ->__find_one($id)
       );
     }else{
       $instance= $this->_create_model_instance($this->__find_one($id));
@@ -64,21 +95,15 @@ trait Finder{
   }
 
   function merge($orm){
-    $props= [
-      "_result_columns", 
-      "_join_sources", 
-      "_distinct", 
-      "_raw_query", 
-      "_raw_parameters", 
-      "_where_conditions", 
-      "_limit", 
-      "_offset", 
-      "_order_by", 
-      "_group_by",
-      "_having_conditions",
-    ];
-    foreach($props as $prop)
+    foreach($this->props() as $prop){
+      //overrides preceding props
       if(!empty($orm->$prop))$this->$prop= $orm->$prop;
+      //reset props
+      foreach($orm->_prop_reset as $reset){
+        unset($this->$reset);
+
+      }
+    }
     return $this;
   }
 
@@ -86,7 +111,9 @@ trait Finder{
     $class_name= $this->_class_name;
     if(method_exists($class_name, "_default_scope")){
       //$results= $this->filter("_default_scope")->__find_many();
-      $results= $class_name::filter("_default_scope")->merge($this)->__find_many();
+      $results= $class_name::filter("_default_scope")
+        ->merge($this)
+        ->__find_many();
     }else{
       $results = $this->__find_many();
     }

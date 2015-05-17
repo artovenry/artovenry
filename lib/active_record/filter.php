@@ -17,7 +17,9 @@ trait Filter{
         $args = func_get_args();
         $filter_function = array_shift($args);
         array_unshift($args, $this);
-        if (method_exists($this->_class_name, $filter_function)) {
+        if (is_callable($filter_function)) {
+            return call_user_func_array($filter_function, $args);
+        }elseif (method_exists($this->_class_name, $filter_function)) {
             return call_user_func_array(array($this->_class_name, $filter_function), $args);
         }
     }
