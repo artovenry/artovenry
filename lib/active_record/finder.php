@@ -7,13 +7,18 @@ class Collection extends \ArrayObject{
     foreach($this as $record){
       $_record= $record->as_array();
       foreach($_record as $key=>&$value){
-        if(!($value instanceof self))continue;
-        foreach($value as &$_value){
-          $_value= $_value->as_array();
-        }
+        $classname= get_class($this);
+        if(!($value instanceof $classname))continue;
+        $_hoge= [];
+        foreach($value as $_value)
+          $_hoge[]= $_value->as_array();
+        $value= $_hoge;
+
       }
+
       $rs[]= $_record;
     }
+    //var_dump($rs);exit;
     return json_encode($rs, SCRIPT_DEBUG? JSON_PRETTY_PRINT: null);
   }
 }
