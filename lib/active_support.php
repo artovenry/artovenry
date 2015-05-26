@@ -44,7 +44,7 @@ class Date extends \DateTime{
 
   const FORMAT= 'Y-m-d'; // 0000-00-00
   
-  function to_s(){
-    return $this->format(self::FORMAT);
+  function to_s($format=null){
+    return $this->format($format? $format:  self::FORMAT);
   }
 }

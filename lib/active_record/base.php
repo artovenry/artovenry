@@ -516,6 +516,10 @@ class Base extends _Base{
     return $this->as_array();
   }
 
+  function to_json(){
+    return json_encode($this->to_a());
+  }
+
 /*
   function __call($name, $args){
     if(method_exists($this, "call_associations")){
