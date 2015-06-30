@@ -2,7 +2,7 @@
 namespace Art;
 
 class Configuration{
-  const CONFIG_PATH= "config/config.yml";
+  const CONFIG_DIR= "config";
   
   private static $config;
 
@@ -33,7 +33,12 @@ class Configuration{
     return self::set_config($option, $scope);
   }
   static function load(){
-    self::$config= Yaml::parse(file_get_contents(ART_APP_PATH . "/" . self::CONFIG_PATH));
+    if(defined('ART_ENV')){
+      $config_file= "config_" . ART_ENV . ".yml";
+    }else{
+      $config_file= "config.yml";
+    }
+    self::$config= Yaml::parse(file_get_contents(ART_APP_PATH . "/" . self::CONFIG_DIR . "/" . $config_file));
   }
 
   private static function key_string($scope){
