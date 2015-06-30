@@ -1,5 +1,5 @@
 {
-    "name": "showtarow/artovenry",
+    "name": "artovenry/artovenry",
     "description": "mini-framework for me",
     "require": {
         "j4mie/idiorm": "~1.5",
@@ -8,8 +8,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "showtarow",
-            "email": "showtarow@gmail.com"
+            "name": "artovenry",
+            "email": "artovenry@gmail.com"
         }
     ],
     "autoload":{
