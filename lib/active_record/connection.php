@@ -3,7 +3,6 @@ namespace Art\ActiveRecord;
 
 class Connection{
   const DB_CONFIG_PATH= "config/database.yml";
-  const CHARSET= "utf8";
   private static $connection;
 
   static function retrieve(){
@@ -22,11 +21,9 @@ class Connection{
     $config= \Art\Configuration::config("active_record.database");
     $host= empty($config["hostname"])? "": "host={$config['hostname']}";
     $dbname= empty($config["database"])? "": "dbname={$config['database']}";
-    //$charset= empty($config["charset"])? self::CHARSET: "charset={$config['charset']}";
-    $charset= "charset=utf8";
     $unix_socket= empty($config["socket"])? "": "unix_socket={$config['socket']}";
     return array(
-      "connection_string"=>'mysql:' . join(";", [$host, $dbname, $charset, $unix_socket]),
+      "connection_string"=>'mysql:' . join(";", [$host, $dbname, $unix_socket]),
       "username"=>$config["user"],
       "password"=>$config["password"],
       "logging"=>$config["logging"]

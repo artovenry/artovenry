@@ -1,10 +1,8 @@
 <?
 namespace Art;
 require __DIR__ . "/active_support/date_time.php";
-require __DIR__ . "/active_support/error.php";
 
 class Yaml extends \Symfony\Component\Yaml\Yaml{}
-
 
 function to_lowercase($str){
   $str = preg_replace('/([A-Z])/', '_$1', $str);
@@ -21,15 +19,6 @@ function to_uppercase($str){
   return join("",$words);  
 }
 
-function like_hash($arg){
-  if(!is_array($arg))return false;
-  if(empty($arg))return true;
-
-  foreach(array_keys($arg) as $key)
-    if(!is_int($key)) return true;
-  return false;
-}
-
 class DateTime extends \DateTime{
   use DateTime\Calculations;
   
@@ -44,7 +33,7 @@ class Date extends \DateTime{
 
   const FORMAT= 'Y-m-d'; // 0000-00-00
   
-  function to_s($format=null){
-    return $this->format($format? $format:  self::FORMAT);
+  function to_s(){
+    return $this->format(self::FORMAT);
   }
 }

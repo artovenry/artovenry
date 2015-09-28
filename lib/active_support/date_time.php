@@ -15,10 +15,4 @@ trait Calculations{
   static function tomorrow(){
     return new static("tomorrow");
   }
-
-  static function yesterday(){
-    return new static("yesterday");
-  }
-
-
 }

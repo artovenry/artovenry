@@ -1,0 +1,19 @@
+<?
+class %s extends Phpmig\Migration\Migration{
+  function up(){
+    $sql= <<< UP
+
+UP;
+    $container = $this->getContainer(); 
+    $container['connection']->query($sql);      
+
+  }
+
+  function down(){
+    $sql= <<< DOWN
+
+DOWN;
+    $container = $this->getContainer(); 
+    $container['connection']->query($sql);      
+  }
+}
