@@ -14,5 +14,9 @@
     ],
     "config": {
         "bin-dir": "bin"
+    },
+
+    "autoload":{
+        "classmap":["artovenry.php", "lib/"]
     }
 }
